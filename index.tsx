@@ -4,11 +4,14 @@ import { Canvas } from '@react-three/fiber';
 import { EffectComposer, Bloom, Noise, Vignette, ChromaticAberration } from '@react-three/postprocessing';
 import { Scene } from './Scene';
 import { Interface } from './Interface';
+import { Intro } from './Intro';
 import * as THREE from 'three';
 
 const App = () => {
   return (
     <div style={{ width: '100vw', height: '100vh', background: '#000' }}>
+      <Intro />
+      
       <Canvas
         dpr={[1, 2]}
         gl={{ antialias: false }} 
@@ -39,7 +42,7 @@ const App = () => {
       
       <Interface />
       
-      {/* Loading Overlay (Optional, simple implementation) */}
+      {/* Loading Overlay */}
       <Suspense fallback={
         <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', background: 'black', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           INITIALIZING...

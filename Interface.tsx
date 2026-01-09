@@ -192,6 +192,11 @@ const Timeline = () => {
 };
 
 export const Interface = () => {
+  const showIntro = useGenesisStore(state => state.showIntro);
+  
+  // Don't show interface if intro is playing
+  if (showIntro) return null;
+
   return (
     <>
       <HUD />

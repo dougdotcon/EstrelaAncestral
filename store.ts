@@ -12,10 +12,13 @@ interface GenesisState {
   progress: number; // 0.0 to 1.0
   phase: Phase;
   isPlaying: boolean;
+  showIntro: boolean;
+  hasFinished: boolean; // Helper to track end state
   
   // Actions
   setProgress: (value: number) => void;
   setIsPlaying: (playing: boolean) => void;
+  setShowIntro: (show: boolean) => void;
   togglePlay: () => void;
   restart: () => void;
 }
@@ -23,7 +26,9 @@ interface GenesisState {
 export const useGenesisStore = create<GenesisState>((set) => ({
   progress: 0,
   phase: Phase.ANCESTRAL,
-  isPlaying: true,
+  isPlaying: false, // Wait for Intro
+  showIntro: true,
+  hasFinished: false,
   
   setProgress: (value) => set((state) => {
     // Loop logic handled in Scene, here we just clamp for safety or allow wrap if passed manually
@@ -44,10 +49,12 @@ export const useGenesisStore = create<GenesisState>((set) => ({
     return { 
       progress: p, 
       phase: currentPhase,
+      hasFinished: false 
     };
   }),
 
   setIsPlaying: (playing) => set({ isPlaying: playing }),
+  setShowIntro: (show) => set({ showIntro: show }),
   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
-  restart: () => set({ progress: 0, isPlaying: true })
+  restart: () => set({ progress: 0, isPlaying: true, hasFinished: false })
 }));
